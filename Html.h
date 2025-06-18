@@ -3,28 +3,17 @@
 #include <string>
 #include <vector>
 
-namespace tag
-{
-    enum
-    {
-        a = 0,
-    };
-}
-
-namespace option
-{
-    enum
-    {
-        link = 0,
-        alt,
-        obj,
-    };
-}
 
 class Tag
 {
     private:
         std::string tag_str;
+        enum option
+        {
+            link = 0,
+            alt,
+            obj,
+        };
         // std::string link;
         // std::string alt;
         // std::string obj;
@@ -40,6 +29,10 @@ class Html
 {
     private:
         std::string html_str;
+        enum tag
+        {
+            a = 0,
+        };
 
     public:
         Html(const char* str);
