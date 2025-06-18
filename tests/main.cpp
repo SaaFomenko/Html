@@ -1,17 +1,15 @@
 #include <gtest/gtest.h>
+// #include <vector>
 #include "../../my_file/my_file.h"
 #include "../Html.h"
-//#include <gmosk/gmosk.h>
 
 
 namespace my
 {
     const char* test_div = "\n----------------------------------\n";
-    const char* url_test = "http://example.com:8080/home/test.html";
-    const char* way_test = "example.com:8080/home/test.html";
-    const char* host_test = "example.com";
-    const std::string http_scheme = "http";
-    const std::string https_scheme = "https";
+    const char* path_file = "index.html";
+    const char* test_file = "test.txt";
+    // const std::string http_scheme = "http";
 }
 
 template <class T>
@@ -34,15 +32,23 @@ void print_test(T val, const char* name)
 //     EXPECT_STREQ(value.c_str(), my::test_url.c_str());
 // }
 
-struct UrlClassTest : public testing::Test
+struct HtmlClassTest : public testing::Test
 {
-    Url *url;
+    Html *html;
+    MyFile *file;
+    MyFile *test_file;
+    std::string test_str;
+    const char* html_str;
 
     void SetUp()
     {
         try
         {
-            url = new Url(my::url_test);
+            file = new MyFile(my::path_file);
+            html_str = file->to_str().c_str();
+            html = new Html(html_str);
+            test_file = new MyFile(my::test_file);
+            test_str = test_file->to_str();
         }
         catch(const std::exception& e)
         {
@@ -52,46 +58,17 @@ struct UrlClassTest : public testing::Test
     }
     void TearDown()
     {
-        delete url;
+        delete file;
+        delete test_file;
+        delete html;
     }
 };
 
-TEST_F(UrlClassTest, get_test)
+TEST_F(HtmlClassTest, get_a)
 {
     std::string value = url->get();
 
     EXPECT_STREQ(value.c_str(), my::url_test);
-}
-
-TEST_F(UrlClassTest, get_sheme_test)
-{
-    const std::string value = url->get_scheme();
-
-    const char* test_scheme;    
-    if(value == my::http_scheme)
-    {
-        test_scheme = my::http_scheme.c_str();
-    }
-    else
-    {
-        test_scheme = my::https_scheme.c_str(); 
-    }
-
-    EXPECT_STREQ(value.c_str(), test_scheme);
-}
-
-TEST_F(UrlClassTest, get_way_test)
-{
-    std::string value = url->get_way();
-
-    EXPECT_STREQ(value.c_str(), my::way_test);
-}
-
-TEST_F(UrlClassTest, get_host_test)
-{
-    std::string value = url->get_host();
-
-    EXPECT_STREQ(value.c_str(), my::host_test);
 }
 
 int main(int argc, char **argv)

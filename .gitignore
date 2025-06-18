@@ -1,3 +1,10 @@
+# test data
+tests/*.html
+tests/*.txt
+
+# test exec file
+tests/test
+
 # Prerequisites
 *.d
 
