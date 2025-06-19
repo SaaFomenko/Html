@@ -12,3 +12,8 @@ html_str(str)
 {}
 
 Html::~Html(){}
+
+std::vector<Tag> Html::get(unsigned int tag_id)
+{
+
+}
